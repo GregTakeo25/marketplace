@@ -3,6 +3,7 @@ import Button, { ButtonSize, ButtonType } from "src/components/Button";
 import { useIntl } from "src/hooks/useIntl";
 import Attachment2 from "src/icons/Attachment2";
 import CheckLine from "src/icons/CheckLine";
+import Subtract from "src/icons/SubtractLine";
 
 type Props = {
   attachments: File[];
@@ -32,12 +33,25 @@ export default function Attachments({ attachments, setAttachments }: Props) {
       </div>
       <div className="flex flex-col gap-3">
         {attachments.map((attachment, index) => (
-          <div key={index} className="flex flex-row items-center gap-3 border border-greyscale-50/8 rounded-lg p-4">
+          <div
+            key={index}
+            className="group/attachment flex flex-row items-center gap-3 border border-greyscale-50/8 rounded-lg p-4"
+          >
             <div className="w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl">
               <Attachment2 className="text-greyscale-50 text-xl" />
             </div>
             <div className="font-walsheim font-medium text-greyscale-50 text-base w-full">{attachment.name}</div>
-            <CheckLine className="text-greyscale-50 text-xl" />
+            <div className="group-hover/attachment:opacity-100 opacity-0">
+              <Button
+                type={ButtonType.Secondary}
+                size={ButtonSize.Sm}
+                iconOnly
+                onClick={() => setAttachments(attachments => attachments.filter(a => a !== attachment))}
+              >
+                <Subtract />
+              </Button>
+            </div>
+            <CheckLine className="text-greyscale-50 text-xl group-hover/attachment:hidden" />
           </div>
         ))}
       </div>
