@@ -130,7 +130,7 @@
         },
         "other": {
           "attachments": {
-            "addButton": "Add file",
+            "addButton": "Add files",
             "title": "Attachments"
           },
           "callout": "For tracking purposes, we will create the corresponding issue on GitHub.",

@@ -19,6 +19,7 @@ import {
   GetProjectReposQuery,
   RepositoryOwnerAndNameFragment,
 } from "src/__generated/graphql";
+import Attachments from "./Attachments";
 import Description from "./Description";
 import RepoSelect from "./RepoSelect";
 import Title from "./Title";
@@ -45,6 +46,7 @@ export default function OtherWorkForm({ projectId, contributorHandle, onWorkItem
   const [selectedRepo, setSelectedRepo] = useState<RepositoryOwnerAndNameFragment | null>();
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [attachments, setAttachments] = useState<File[]>([]);
 
   const defaultTitle = T("payment.form.workItems.other.issue.defaultTitle", {
     kind: T(selectedWorkKind.labelKey),
@@ -98,6 +100,7 @@ export default function OtherWorkForm({ projectId, contributorHandle, onWorkItem
       <WorkKinds workKind={selectedWorkKind} setWorkKind={setSelectedWorkKind} />
       <Title title={title} setTitle={setTitle} defaultTitle={defaultTitle} />
       <Description description={description} setDescription={setDescription} />
+      <Attachments attachments={attachments} setAttachments={setAttachments} />
       <Callout>{T("payment.form.workItems.other.callout")}</Callout>
       <div className="fixed bottom-0 inset-x-0 flex flex-row gap-8 px-6 py-6 bg-white/2 border-t border-greyscale-50/8">
         {selectedRepo ? (
