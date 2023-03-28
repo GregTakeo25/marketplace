@@ -1,15 +1,18 @@
 import { useRef } from "react";
+import Loader from "src/assets/icons/Loader";
 import Button, { ButtonSize, ButtonType } from "src/components/Button";
 import { useIntl } from "src/hooks/useIntl";
 import Attachment2 from "src/icons/Attachment2";
 import CheckLine from "src/icons/CheckLine";
 import Subtract from "src/icons/SubtractLine";
+import { FileUpload } from "./useFileUpload";
 
 type Props = {
-  attachments: File[];
-  setAttachments: (attachments: File[] | ((attachments: File[]) => File[])) => void;
+  attachments: FileUpload[];
+  upload: (attachments: File[]) => void;
+  remove: (attachments: File[]) => void;
 };
-export default function Attachments({ attachments, setAttachments }: Props) {
+export default function Attachments({ attachments, upload, remove }: Props) {
   const { T } = useIntl();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -28,7 +31,7 @@ export default function Attachments({ attachments, setAttachments }: Props) {
           multiple
           ref={fileInputRef}
           style={{ display: "none" }}
-          onChange={({ target }) => setAttachments(attachments => [...attachments, ...Array.from(target.files || [])])}
+          onChange={({ target }) => target.files && upload(Array.from(target.files))}
         />
       </div>
       <div className="flex flex-col gap-3">
@@ -41,17 +44,23 @@ export default function Attachments({ attachments, setAttachments }: Props) {
               <Attachment2 className="text-greyscale-50 text-xl" />
             </div>
             <div className="font-walsheim font-medium text-greyscale-50 text-base w-full">{attachment.name}</div>
-            <div className="group-hover/attachment:opacity-100 opacity-0">
-              <Button
-                type={ButtonType.Secondary}
-                size={ButtonSize.Sm}
-                iconOnly
-                onClick={() => setAttachments(attachments => attachments.filter(a => a !== attachment))}
-              >
-                <Subtract />
-              </Button>
-            </div>
-            <CheckLine className="text-greyscale-50 text-xl group-hover/attachment:hidden" />
+            {attachment.url ? (
+              <>
+                <div className="group-hover/attachment:opacity-100 opacity-0">
+                  <Button
+                    type={ButtonType.Secondary}
+                    size={ButtonSize.Sm}
+                    iconOnly
+                    onClick={() => remove([attachment])}
+                  >
+                    <Subtract />
+                  </Button>
+                </div>
+                <CheckLine className="text-greyscale-50 text-xl group-hover/attachment:hidden" />
+              </>
+            ) : (
+              <Loader className="animate-spin" />
+            )}
           </div>
         ))}
       </div>
