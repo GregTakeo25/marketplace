@@ -103,7 +103,7 @@ export default function OtherWorkForm({ projectId, contributorHandle, onWorkItem
       <Description description={description} setDescription={setDescription} />
       <Attachments attachments={files} upload={upload} remove={remove} />
       <Callout>{T("payment.form.workItems.other.callout")}</Callout>
-      <div className="fixed bottom-0 inset-x-0 flex flex-row gap-8 px-6 py-6 bg-white/2 border-t border-greyscale-50/8">
+      <div className="fixed bottom-0 inset-x-0 flex flex-row gap-8 px-6 py-6 bg-white/2 border-t border-greyscale-50/8 backdrop-blur-4xl">
         {selectedRepo ? (
           <RepoSelect repos={repos} repo={selectedRepo} setRepo={setSelectedRepo} />
         ) : (
