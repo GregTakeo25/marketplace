@@ -3,7 +3,7 @@ import { useRef } from "react";
 import Loader from "src/assets/icons/Loader";
 import Button, { ButtonSize, ButtonType } from "src/components/Button";
 import { useIntl } from "src/hooks/useIntl";
-import Attachment2 from "src/icons/Attachment2";
+import AttachmentLine from "src/icons/AttachmentLine";
 import CheckLine from "src/icons/CheckLine";
 import Subtract from "src/icons/SubtractLine";
 import { FileUpload } from "./useFileUpload";
@@ -23,7 +23,7 @@ export default function Attachments({ attachments, upload, remove }: Props) {
       <div className="flex flex-row justify-between items-center font-belwe font-normal text-base text-greyscale-50">
         {T("payment.form.workItems.other.attachments.title")}
         <Button type={ButtonType.Secondary} size={ButtonSize.Sm} onClick={() => fileInputRef?.current?.click()}>
-          <Attachment2 />
+          <AttachmentLine />
           {T("payment.form.workItems.other.attachments.addButton")}
         </Button>
         <input
@@ -48,7 +48,7 @@ export default function Attachments({ attachments, upload, remove }: Props) {
               className="group/attachment flex flex-row items-center gap-3 border border-greyscale-50/8 rounded-lg p-4"
             >
               <div className="w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl shrink-0">
-                <Attachment2 className="text-greyscale-50 text-xl" />
+                <AttachmentLine className="text-greyscale-50 text-xl" />
               </div>
               <div className="font-walsheim font-medium text-greyscale-50 text-base w-full">{attachment.name}</div>
               {attachment.url ? (
