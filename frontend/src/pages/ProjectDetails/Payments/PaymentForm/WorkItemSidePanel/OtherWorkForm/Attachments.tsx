@@ -42,35 +42,38 @@ export default function Attachments({ attachments, upload, remove }: Props) {
             "max-h-96 overflow-auto scrollbar-thin scrollbar-w-1.5 scrollbar-thumb-spaceBlue-500 scrollbar-thumb-rounded"
           )}
         >
-          {attachments.map((attachment, index) => (
-            <div
-              key={index}
-              className="group/attachment flex flex-row items-center gap-3 border border-greyscale-50/8 rounded-lg p-4"
-            >
-              <div className="w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl shrink-0">
-                <AttachmentLine className="text-greyscale-50 text-xl" />
-              </div>
-              <div className="font-walsheim font-medium text-greyscale-50 text-base w-full">{attachment.name}</div>
-              {attachment.url ? (
-                <>
-                  <div className="group-hover/attachment:opacity-100 opacity-0">
-                    <Button
-                      type={ButtonType.Secondary}
-                      size={ButtonSize.Sm}
-                      iconOnly
-                      onClick={() => remove([attachment])}
-                    >
-                      <Subtract />
-                    </Button>
-                  </div>
-                  <CheckLine className="text-greyscale-50 text-xl group-hover/attachment:hidden" />
-                </>
-              ) : (
-                <Loader className="animate-spin" />
-              )}
-            </div>
+          {attachments.map(attachment => (
+            <Attachment key={attachment.name} attachment={attachment} remove={remove} />
           ))}
         </div>
+      )}
+    </div>
+  );
+}
+
+type AttachmentProps = {
+  attachment: FileUpload;
+  remove: (attachments: File[]) => void;
+};
+
+function Attachment({ attachment, remove }: AttachmentProps) {
+  return (
+    <div className="group/attachment flex flex-row items-center gap-3 border border-greyscale-50/8 rounded-lg p-4">
+      <div className="w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl shrink-0">
+        <AttachmentLine className="text-greyscale-50 text-xl" />
+      </div>
+      <div className="font-walsheim font-medium text-greyscale-50 text-base w-full">{attachment.name}</div>
+      {attachment.url ? (
+        <>
+          <div className="group-hover/attachment:opacity-100 opacity-0">
+            <Button type={ButtonType.Secondary} size={ButtonSize.Sm} iconOnly onClick={() => remove([attachment])}>
+              <Subtract />
+            </Button>
+          </div>
+          <CheckLine className="text-greyscale-50 text-xl group-hover/attachment:hidden" />
+        </>
+      ) : (
+        <Loader className="animate-spin" />
       )}
     </div>
   );
