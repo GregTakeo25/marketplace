@@ -1,4 +1,4 @@
-import { sortBy } from "lodash";
+import { every, sortBy } from "lodash";
 import { useEffect, useState } from "react";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import Button, { Width } from "src/components/Button";
@@ -93,6 +93,8 @@ export default function OtherWorkForm({ projectId, contributorHandle, onWorkItem
     }
   );
 
+  const uploadComplete = every(files, { uploadStatus: "complete" });
+
   return (
     <div className="flex flex-col gap-4 relative">
       <div className="font-belwe font-normal text-base text-greyscale-50">
@@ -109,7 +111,11 @@ export default function OtherWorkForm({ projectId, contributorHandle, onWorkItem
         ) : (
           <div className="w-full" />
         )}
-        <Button width={Width.Full} disabled={!selectedWorkKind || !description || loading} onClick={createIssue}>
+        <Button
+          width={Width.Full}
+          disabled={!selectedWorkKind || !description || loading || !uploadComplete}
+          onClick={createIssue}
+        >
           <CheckLine />
           {T("payment.form.workItems.other.footer.submitButton")}
         </Button>
