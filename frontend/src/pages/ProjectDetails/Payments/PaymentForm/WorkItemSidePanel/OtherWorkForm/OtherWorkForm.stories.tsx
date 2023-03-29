@@ -2,6 +2,7 @@ import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { GET_USER_IDENTITY_QUERY } from "src/App/Layout/Header/FeedbackButton";
 import { AuthContext, AuthContextType } from "src/hooks/useAuth";
 import { ToasterProvider } from "src/hooks/useToaster";
+import { TokenSetContext, TokenSetContextType } from "src/hooks/useTokenSet";
 import { User } from "src/types";
 import { GetProjectReposDocument, GetProjectReposQueryResult } from "src/__generated/graphql";
 import OtherWorkForm from ".";
@@ -32,6 +33,18 @@ const MockAuthProvider = ({ children }: { children: React.ReactNode }) => {
     githubUserId: 123,
   };
   return <AuthContext.Provider value={mockedValue}>{children}</AuthContext.Provider>;
+};
+
+const MockTokenSetProvider = ({ children }: { children: React.ReactNode }) => {
+  const mockedValue: TokenSetContextType = {
+    clearTokenSet: Function.prototype(),
+    hasRefreshError: false,
+    setFromRefreshToken: Function.prototype(),
+    setHasRefreshError: Function.prototype(),
+    setTokenSet: Function.prototype(),
+  };
+
+  return <TokenSetContext.Provider value={mockedValue}>{children}</TokenSetContext.Provider>;
 };
 
 const mocks: MockedResponse[] = [
@@ -75,12 +88,14 @@ const mocks: MockedResponse[] = [
 
 export const Default = {
   render: () => (
-    <MockedProvider mocks={mocks}>
-      <MockAuthProvider>
-        <ToasterProvider>
-          <OtherWorkForm projectId={PROJECT_ID} contributorHandle="ofux" onWorkItemAdded={Function.prototype()} />
-        </ToasterProvider>
-      </MockAuthProvider>
-    </MockedProvider>
+    <MockTokenSetProvider>
+      <MockedProvider mocks={mocks}>
+        <MockAuthProvider>
+          <ToasterProvider>
+            <OtherWorkForm projectId={PROJECT_ID} contributorHandle="ofux" onWorkItemAdded={Function.prototype()} />
+          </ToasterProvider>
+        </MockAuthProvider>
+      </MockedProvider>
+    </MockTokenSetProvider>
   ),
 };
