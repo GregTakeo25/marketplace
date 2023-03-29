@@ -6,6 +6,7 @@ import { useIntl } from "src/hooks/useIntl";
 import AttachmentLine from "src/icons/AttachmentLine";
 import CheckLine from "src/icons/CheckLine";
 import Subtract from "src/icons/SubtractLine";
+import { formatSize } from "src/utils/file";
 import { FileUpload } from "./useFileUpload";
 
 type Props = {
@@ -62,7 +63,10 @@ function Attachment({ attachment, remove }: AttachmentProps) {
       <div className="w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl shrink-0">
         <AttachmentLine className="text-greyscale-50 text-xl" />
       </div>
-      <div className="font-walsheim font-medium text-greyscale-50 text-base w-full">{attachment.name}</div>
+      <div className=" w-full">
+        <div className="font-walsheim font-medium text-greyscale-50 text-base">{attachment.name}</div>
+        <div className="font-walsheim font-medium text-spaceBlue-200 text-sm">{formatSize(attachment.size)}</div>
+      </div>
       {attachment.url ? (
         <>
           <div className="group-hover/attachment:opacity-100 opacity-0">
