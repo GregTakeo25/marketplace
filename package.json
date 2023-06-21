@@ -23,7 +23,8 @@
     "hasura:refresh": "make hasura/refresh",
     "hasura:console": "make hasura/start",
     "dependency-cruiser": "depcruise --config .dependency-cruiser.js frontend/src",
-    "update-languages": "./scripts/generate-github-languages-file.sh"
+    "update-languages": "./scripts/generate-github-languages-file.sh",
+    "doc:frontend": "cd frontend/docs/ && mdbook serve --open"
   },
   "dependencies": {
     "@apollo/client": "3.8.0-alpha.5",

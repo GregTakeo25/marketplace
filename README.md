@@ -102,6 +102,22 @@ make hasura/start # Apply metadata and start the console
 
 ### 🔬 Frontend
 
+#### 📘 Docs
+
+Install [MdBook](https://rust-lang.github.io/mdBook/) with Homebrew:
+
+```
+brew install mdbook
+```
+
+You can then launch the docs using:
+
+```
+yarn doc:frontend
+```
+
+#### 🏃‍♀️ Run
+
 To run in development mode
 
 ```bash
