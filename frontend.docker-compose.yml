@@ -4,10 +4,13 @@ services:
     labels:
       type: frontend
     container_name: frontend
-    image: node:18-bullseye
-    volumes:
-      - .:/app
-    command: git config --global --add safe.directory /app && bash -c "cd /app && yarn frontend:install && yarn frontend:dev --host"
+    build:
+      context: frontend
+      dockerfile_inline: |
+        FROM node:18-bullseye
+        COPY . /app
+        WORKDIR /app/frontend
+        CMD yarn install && yarn dev
     ports:
       - 5173:5173
     healthcheck:
