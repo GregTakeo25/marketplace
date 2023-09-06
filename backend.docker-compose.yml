@@ -15,7 +15,7 @@ services:
     volumes:
       - .:/app
       - cargo-cache:/usr/local/cargo
-    command: bash -c "cd /app/backend && cargo run -p api"
+    command: git config --global --add safe.directory /app && bash -c "cd /app/backend && cargo run -p api"
     ports:
       - 8000:8000
     healthcheck:
@@ -48,7 +48,7 @@ services:
     volumes:
       - .:/app
       - cargo-cache:/usr/local/cargo
-    command: bash -c "cd /app/backend && cargo run -p github-proxy"
+    command: git config --global --add safe.directory /app && bash -c "cd /app/backend && cargo run -p github-proxy"
     ports:
       - 8001:8001
     depends_on:
@@ -82,7 +82,7 @@ services:
     volumes:
       - .:/app
       - cargo-cache:/usr/local/cargo
-    command: bash -c "cd /app/backend && cargo run -p event-store"
+    command: git config --global --add safe.directory /app && bash -c "cd /app/backend && cargo run -p event-store"
     environment:
       DATABASE_URL: postgres://postgres:postgres@db/marketplace_db
       AMQP_URL: amqp://rabbitmq:5672/%2f
@@ -103,7 +103,7 @@ services:
     volumes:
       - .:/app
       - cargo-cache:/usr/local/cargo
-    command: bash -c "cd /app/backend && cargo run -p event-listeners"
+    command: git config --global --add safe.directory /app && bash -c "cd /app/backend && cargo run -p event-listeners"
     environment:
       DATABASE_URL: postgres://postgres:postgres@db/marketplace_db
       AMQP_URL: amqp://rabbitmq:5672/%2f
@@ -127,7 +127,7 @@ services:
     volumes:
       - .:/app
       - cargo-cache:/usr/local/cargo
-    command: bash -c "cd /app/backend && cargo run -p event-listeners --bin github-indexer"
+    command: git config --global --add safe.directory /app && bash -c "cd /app/backend && cargo run -p event-listeners --bin github-indexer"
     environment:
       DATABASE_URL: postgres://postgres:postgres@db/marketplace_db
       AMQP_URL: amqp://rabbitmq:5672/%2f

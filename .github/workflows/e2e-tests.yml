@@ -57,7 +57,7 @@ jobs:
           limit-access-to-actor: false
 
       - name: Fix 'dubious ownership in repository' error in Docker containers
-        run: rm -rf .git
+        run: git config --global --add safe.directory /app
 
       - name: Copy the .env file
         shell: bash
@@ -69,6 +69,9 @@ jobs:
 
       - name: Start the docker stack
         run: yarn e2e:env:up
+
+      - name: Frontend container logs
+        run: docker logs frontend
 
       - name: Check database and GraphQL schema consistency
         run: yarn hasura:metadata:check-consistency
