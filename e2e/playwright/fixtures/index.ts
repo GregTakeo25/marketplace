@@ -60,14 +60,19 @@ export const test = base.extend<PopulatedDataFixtures>({
   signIn: async ({ page, printBrowserLogs }, use) => {
     await use(async (user: User) => {
       await printBrowserLogs();
+      console.log(await page.content());
       const rnd = (Math.random() + 1).toString(36).substring(7);
       await page.screenshot({ path: `playwright-report/${rnd}-before-goto.png` });
+
       await page.goto("/");
+      console.log(await page.content());
       await expect(page.locator("#root")).toBeVisible();
       await page.screenshot({ path: `playwright-report/${rnd}-after-goto.png` });
 
       await setLocalStorageTest("hasura_token", user.session, page);
       await page.reload();
+
+      console.log(await page.content());
       await expect(page.locator("#profile-button").getByText(user.github.login, { exact: true })).toBeVisible();
     });
   },
